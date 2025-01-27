@@ -11,9 +11,15 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tailwindcss/typography": "^0.5.14",
     "@tsconfig/svelte": "^5.0.4",
+    "autoprefixer": "^10.4.20",
+    "flowbite": "^3.0.0",
+    "flowbite-svelte": "^0.47.4",
+    "flowbite-svelte-icons": "^2.0.2",
     "svelte": "^5.15.0",
     "svelte-check": "^4.1.1",
+    "tailwindcss": "^3.4.9",
     "typescript": "~5.6.2",
     "vite": "^6.0.5"
   }
