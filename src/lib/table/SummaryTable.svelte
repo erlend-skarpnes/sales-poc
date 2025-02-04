@@ -1,30 +1,24 @@
 <script lang="ts">
-    import {
-        Table,
-        TableBody,
-        TableBodyCell,
-        TableBodyRow,
-        TableHead,
-        TableHeadCell,
-        Checkbox,
-        TableSearch,
-        Button
-    } from 'flowbite-svelte';
+    import {Spinner, Table, TableBody, TableHead, TableHeadCell} from 'flowbite-svelte';
     import SummaryRow from "./SummaryRow.svelte";
 
-    import { onMount } from "svelte";
-    import type {DataRow} from "./dataRow";
-
     const endpoint = "http://localhost:5401/summaries";
-    let rows: DataRow[] = [{title: "Test", customer: "Test", role: "Test", summary: "Test", deadline: "Test"}];
+    // let rows: DataRow[] = [{title: "Test", customer: "Test", role: "Test", summary: "Test", deadline: "Test"}];
 
-    onMount(async function () {
+    let loadingPromise = async () => {
         const response = await fetch(endpoint);
-        rows = await response.json();
-    });
-</script>
+        return await response.json();
+    }
 
-<Table>
+    // onMount(async function () {
+    //     const response = await fetch(endpoint);
+    //     // rows = await response.json();
+    // });
+</script>
+{#await loadingPromise()}
+    <Spinner/>
+{:then rows}
+    <Table>
         <TableHead>
             <TableHeadCell>Tittel</TableHeadCell>
             <TableHeadCell>Sammendrag</TableHeadCell>
@@ -35,7 +29,10 @@
         </TableHead>
         <TableBody>
             {#each rows as row}
-                <SummaryRow {row} />
+                <SummaryRow {row}/>
             {/each}
         </TableBody>
     </Table>
+{:catch e}
+    Klarte ikke å laste data
+{/await}
