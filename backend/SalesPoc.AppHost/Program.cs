@@ -8,7 +8,7 @@ var mongodb = builder.AddMongoDB("mongo")
     .WithLifetime(ContainerLifetime.Persistent)
     .AddDatabase("mongodb", "salesdb");
 
-builder.AddProject<SalesToolPoc_ApiService>("apiservice")
+builder.AddProject<SalesPoc_ApiService>("apiservice")
     .WithReference(mongodb)
     .WaitFor(mongodb);
 

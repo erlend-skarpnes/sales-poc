@@ -4,10 +4,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>SalesToolPoc.ApiService</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SalesToolPoc.ServiceDefaults\SalesToolPoc.ServiceDefaults.csproj"/>
+        <ProjectReference Include="..\SalesPoc.ServiceDefaults\SalesPoc.ServiceDefaults.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -9,10 +9,11 @@
         <Nullable>enable</Nullable>
         <IsAspireHost>true</IsAspireHost>
         <UserSecretsId>6e3e028d-74db-4688-90bf-f78df0fa89d4</UserSecretsId>
+        <RootNamespace>SalesToolPoc.AppHost</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SalesToolPoc.ApiService\SalesToolPoc.ApiService.csproj"/>
+        <ProjectReference Include="..\SalesPoc.ApiService\SalesPoc.ApiService.csproj" />
     </ItemGroup>
 
     <ItemGroup>
