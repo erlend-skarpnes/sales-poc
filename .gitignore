@@ -5,6 +5,9 @@
 # Development config (can contain secrets)
 appsettings.Development.json
 
+# Mac
+.DS_Store
+
 # User-specific files
 *.suo
 *.user
