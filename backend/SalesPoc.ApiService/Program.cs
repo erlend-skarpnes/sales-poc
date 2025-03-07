@@ -36,7 +36,7 @@ builder.AddMongoDBClient(connectionName: "mongodb");
 builder.Services.AddDbContextFactory<SalesPocDbContext>();
 
 // Email related services
-builder.Services.AddSingleton<IEmailService, GmailService>();
+builder.Services.AddSingleton<IEmailService, EmailFromJsonService>();
 builder.Services.AddSingleton<IUpdateFromEmailService, UpdateFromEmailService>();
 
 var app = builder.Build();
@@ -83,7 +83,7 @@ app.MapGet("/summaries", async (SalesPocDbContext dbContext) =>
     return summaries;
 });
 
-app.MapGet("/update", async (IUpdateFromEmailService updateFromEmailService) => { updateFromEmailService.Update(); });
+app.MapGet("/update", async (IUpdateFromEmailService updateFromEmailService) => { await updateFromEmailService.Update(); });
 
 app.MapGet("/form-input", async (ISalesforceClient client) => await client.GetFormOptions());
 
