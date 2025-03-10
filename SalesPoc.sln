@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesPoc.ServiceDefaults", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesPoc.AppHost", "backend\SalesPoc.AppHost\SalesPoc.AppHost.csproj", "{54BCAD36-7919-DF3E-AE5A-2DC4F431D99E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3975A17D-D196-419F-88F0-28739C487B66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesPoc.ApiService.Tests2", "backend\test\SalesPoc.ApiService.Tests2\SalesPoc.ApiService.Tests2.csproj", "{74C61032-4D04-4AB7-A7E6-57C264E5B42E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,11 +30,18 @@ Global
 		{54BCAD36-7919-DF3E-AE5A-2DC4F431D99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54BCAD36-7919-DF3E-AE5A-2DC4F431D99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54BCAD36-7919-DF3E-AE5A-2DC4F431D99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74C61032-4D04-4AB7-A7E6-57C264E5B42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74C61032-4D04-4AB7-A7E6-57C264E5B42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74C61032-4D04-4AB7-A7E6-57C264E5B42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74C61032-4D04-4AB7-A7E6-57C264E5B42E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {775370D5-5981-41EF-9904-D0EAEB051E27}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74C61032-4D04-4AB7-A7E6-57C264E5B42E} = {3975A17D-D196-419F-88F0-28739C487B66}
 	EndGlobalSection
 EndGlobal
