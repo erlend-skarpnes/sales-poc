@@ -25,7 +25,7 @@ public class StructuredOllamaClient : IChatClient
     }
 
     public async Task<ChatCompletion> CompleteAsync(IList<ChatMessage> chatMessages, ChatOptions? options = null,
-        CancellationToken cancellationToken = new CancellationToken())
+        CancellationToken cancellationToken = new())
     {
         var responseFormat = options?.ResponseFormat?.ToString();
         if (options?.ResponseFormat is ChatResponseFormatJson jsonFormat)

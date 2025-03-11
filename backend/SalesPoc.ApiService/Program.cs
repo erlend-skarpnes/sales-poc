@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.AI;
 using SalesToolPoc.ApiService.Ai;
+using SalesToolPoc.ApiService.Ai.Client;
 using SalesToolPoc.ApiService.Database;
 using SalesToolPoc.ApiService.Email;
 using SalesToolPoc.ApiService.Salesforce;
@@ -27,6 +29,7 @@ builder.Services.AddOptions<SalesforceOptions>()
     .BindConfiguration("Salesforce");
 
 // Add Ai related services
+builder.Services.AddSingleton<IChatClient>(_ => new StructuredOllamaClient("http://localhost:11434", "gemma2"));
 builder.Services.AddSingleton<IAiService, AiService>();
 
 builder.Services.AddSingleton<ISalesforceClient, SalesforceClient>();
@@ -122,16 +125,13 @@ app.MapPost("/form", async ([FromForm] OpportunityForm form, ISalesforceClient c
             ["Assignment_end_date__c"] = form.EndDate
         }
     };
-    
+
     var res = await client.CreateRecord(req);
 
     return res ? Results.Ok() : Results.BadRequest(errors);
 }).DisableAntiforgery();
 
-app.MapGet("/record-defaults", async (ISalesforceClient client) =>
-{
-    return await client.GetRecordDefaults();
-});
+app.MapGet("/record-defaults", async (ISalesforceClient client) => { return await client.GetRecordDefaults(); });
 
 
 app.MapDefaultEndpoints();
@@ -166,3 +166,5 @@ public record OpportunityForm
 };
 
 public record FormError(string Name, string Message);
+
+public partial class Program;

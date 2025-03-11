@@ -8,12 +8,12 @@ namespace SalesToolPoc.ApiService.Ai;
 
 public interface IAiService
 {
-    public Task<RequestSummary> GetRequestSummary(string emailBody, CancellationToken cancellationToken = default);
+    public Task<RequestSummary> GetRequestSummary(string contentBody, CancellationToken cancellationToken = default);
 }
 
-public class AiService : IAiService
+public class AiService(IChatClient client) : IAiService
 {
-    private readonly IChatClient _apiClient;
+    private static readonly JsonSerializerOptions Options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     private const string JsonSchema = """
                                       {
@@ -41,30 +41,23 @@ public class AiService : IAiService
                                       }
                                       """;
 
-    public AiService()
-    {
-        _apiClient = new StructuredOllamaClient("http://localhost:11434", "gemma2");
-    }
-
-    public async Task<RequestSummary> GetRequestSummary(string emailBody, CancellationToken cancellationToken)
+    public async Task<RequestSummary> GetRequestSummary(string contentBody, CancellationToken cancellationToken)
     {
         ChatMessage[] messages =
         [
-            new(ChatRole.System, "You are summarizing requests for consultants. Reply in Norwegian. Reply using JSON. The summary should be max 100 words. The deadline should be a iso8601 utc string. If you are unsure about a field, use a 'null' value."),
-            new(ChatRole.User, emailBody)
+            new(ChatRole.System,
+                "You are summarizing requests for consultants. Reply in Norwegian. Reply using JSON. The summary should be max 100 words. The deadline should be a iso8601 utc string. If you are unsure about a field, use a 'null' value."),
+            new(ChatRole.User, contentBody)
         ];
-        
-        var response = await _apiClient.CompleteAsync(messages, new ChatOptions
+
+        var response = await client.CompleteAsync(messages, new ChatOptions
         {
             Temperature = 0,
             ResponseFormat = new ChatResponseFormatJson(JsonSchema),
         }, cancellationToken);
 
-        var summary = JsonSerializer.Deserialize<RequestSummary>(response.Message.Text, new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
+        var summary = JsonSerializer.Deserialize<RequestSummary>(response.Message.Text, Options);
 
-        return summary;  
+        return summary;
     }
 }
