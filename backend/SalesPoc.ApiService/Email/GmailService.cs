@@ -14,6 +14,8 @@ public interface IEmailService
     public Task<ICollection<Email>> GetRequestEmails(string[] idsToExclude);
 }
 
+public record Email(string Id, string Body);
+
 public class GmailService : IEmailService
 {
     private readonly GmailOptions _options;
@@ -92,4 +94,3 @@ public class GmailService : IEmailService
     }
 }
 
-public record Email(string Id, string Body);
