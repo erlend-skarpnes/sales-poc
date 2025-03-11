@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using SalesToolPoc.ApiService.Ai;
 using SalesToolPoc.ApiService.Database;
 using SalesToolPoc.ApiService.Email;
+using SalesToolPoc.ApiService.Fakes.Email;
 using SalesToolPoc.ApiService.Salesforce;
 using SalesToolPoc.ApiService.Salesforce.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Get environment variables
+var useFakeEmail = builder.Configuration.GetValue<bool>("UseFakeEmail"); 
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
@@ -36,7 +40,15 @@ builder.AddMongoDBClient(connectionName: "mongodb");
 builder.Services.AddDbContextFactory<SalesPocDbContext>();
 
 // Email related services
-builder.Services.AddSingleton<IEmailService, EmailFromJsonService>();
+if (useFakeEmail)
+{
+    builder.Services.AddSingleton<IEmailService, EmailFromJsonService>();
+}
+else
+{
+    builder.Services.AddSingleton<IEmailService, GmailService>();
+}
+
 builder.Services.AddSingleton<IUpdateFromEmailService, UpdateFromEmailService>();
 
 var app = builder.Build();

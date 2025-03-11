@@ -1,19 +1,20 @@
 using Newtonsoft.Json;
+using SalesToolPoc.ApiService.Email;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace SalesToolPoc.ApiService.Email;
+namespace SalesToolPoc.ApiService.Fakes.Email;
 
 public class EmailFromJsonService : IEmailService
 {
 
-    public async Task<ICollection<Email>> GetRequestEmails(string[] idsToExclude)
+    public async Task<ICollection<ApiService.Email.Email>> GetRequestEmails(string[] idsToExclude)
     {
         try
         {
-            var jsonString = await File.ReadAllTextAsync("./Email/DummyEmails.json");
-            var allEmails = JsonSerializer.Deserialize<List<Email>>(jsonString);
-            var newEmails = allEmails.Where(x => !idsToExclude.Contains(x.Id)).ToList();
-            return newEmails;
+            var jsonString = await File.ReadAllTextAsync("./Fakes/Email/DummyEmails.json");
+            var allEmails = JsonSerializer.Deserialize<List<ApiService.Email.Email>>(jsonString);
+            var newEmails = allEmails?.Where(x => !idsToExclude.Contains(x.Id)).ToList();
+            return newEmails ?? [];
         }
         catch (FileNotFoundException ex)
         {
